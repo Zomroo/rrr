@@ -12,7 +12,7 @@ if not os.path.exists(TEMP_STORAGE):
 # Add your API ID, API Hash, and bot token here
 API_ID = 14091414
 API_HASH = "1e26ebacf23466ed6144d29496aa5d5b"
-BOT_TOKEN = "5752952621:AAGO61IiffzN23YuXyv71fbDztA_ubGM6qo"
+BOT_TOKEN = "6143733695:AAEegqSvrhDQFMEpkKkJRP7LvkmHLTmxigw"
 # config.py
 
 SUDO_USERS = [5500572462, 5205602399]
