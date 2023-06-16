@@ -12,6 +12,10 @@ if not os.path.exists(TEMP_STORAGE):
 API_ID = 14091414
 API_HASH = "1e26ebacf23466ed6144d29496aa5d5b"
 BOT_TOKEN = "5752952621:AAGO61IiffzN23YuXyv71fbDztA_ubGM6qo"
+# config.py
+
+ADMIN = [5500572462, 5205602399]
+
 
 # Define the bot client
 app = Client("rename_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
@@ -19,9 +23,8 @@ app = Client("rename_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN
 # Handle the /rename command
 @app.on_message(filters.command("rename") & filters.sudo)
 async def rename_file(bot, message):
-    # Check if the command has the required arguments
-    if len(message.command) < 2:
-        await message.reply("Please provide a new name for the file.")
+    if message.from_user.id not in ADMIN:
+        await message.reply("You are not authorized to use this command.")
         return
 
     new_name = message.command[1]
