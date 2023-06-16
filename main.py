@@ -14,14 +14,14 @@ API_HASH = "1e26ebacf23466ed6144d29496aa5d5b"
 BOT_TOKEN = "5752952621:AAGO61IiffzN23YuXyv71fbDztA_ubGM6qo"
 # config.py
 
-ADMIN = [5500572462, 5205602399]
+SUDO_USERS = [5500572462, 5205602399]
 
 
 # Define the bot client
 app = Client("rename_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 # Handle the /rename command
-@app.on_message(filters.command("rename") & filters.sudo)
+@app.on_message(filters.command("rename") & filters.user(SUDO_USERS))
 async def rename_file(bot, message):
     if message.from_user.id not in ADMIN:
         await message.reply("You are not authorized to use this command.")
