@@ -1,6 +1,5 @@
 from pyrogram import Client, filters
 import os
-import multiprocessing
 
 # Set the temporary storage directory
 TEMP_STORAGE = "./temp_storage"
@@ -17,14 +16,20 @@ BOT_TOKEN = "6143733695:AAEegqSvrhDQFMEpkKkJRP7LvkmHLTmxigw"
 
 SUDO_USERS = [5500572462, 5205602399]
 
-# Define the bot client
-app = Client("rename_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
+# Define the bot client
+app = Client(
+    "rename_bot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=BOT_TOKEN,
+    config_options={"workers": 200}
+)
 
 # Handle the /rename command
 @app.on_message(filters.command("rename") & filters.user(SUDO_USERS))
 async def rename_file(bot, message):
-    if message.from_user.id not in SUDO_USERS:
+    if message.from_user.id not in ADMIN:
         await message.reply("You are not authorized to use this command.")
         return
 
@@ -56,24 +61,5 @@ async def rename_file(bot, message):
     else:
         await message.reply("Please upload a document or video.")
 
-
-# Start the bot with multiple workers
-def start_bot():
-    app.run()
-
-
-if __name__ == "__main__":
-    num_workers = 100  # Adjust the number of workers as per your requirements
-
-    # Create a list of worker processes
-    workers = []
-
-    # Start the worker processes
-    for _ in range(num_workers):
-        worker = multiprocessing.Process(target=start_bot)
-        worker.start()
-        workers.append(worker)
-
-    # Wait for the worker processes to complete
-    for worker in workers:
-        worker.join()
+# Start the bot
+app.run()
